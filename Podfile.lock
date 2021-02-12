@@ -1,0 +1,131 @@
+PODS:
+  - Alamofire (4.9.1)
+  - AppCenter (2.5.3):
+    - AppCenter/Analytics (= 2.5.3)
+    - AppCenter/Crashes (= 2.5.3)
+  - AppCenter/Analytics (2.5.3):
+    - AppCenter/Core
+  - AppCenter/Core (2.5.3)
+  - AppCenter/Crashes (2.5.3):
+    - AppCenter/Core
+  - Bond (7.8.1):
+    - Differ (~> 1.4)
+    - ReactiveKit (~> 3.14)
+  - Differ (1.4.5)
+  - FloatingPanel (1.5.1)
+  - Google-Maps-iOS-Utils (3.5.0):
+    - Google-Maps-iOS-Utils/Clustering (= 3.5.0)
+    - Google-Maps-iOS-Utils/Geometry (= 3.5.0)
+    - Google-Maps-iOS-Utils/Heatmap (= 3.5.0)
+    - Google-Maps-iOS-Utils/QuadTree (= 3.5.0)
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Clustering (3.5.0):
+    - Google-Maps-iOS-Utils/QuadTree
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Geometry (3.5.0):
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/Heatmap (3.5.0):
+    - Google-Maps-iOS-Utils/QuadTree
+    - GoogleMaps
+  - Google-Maps-iOS-Utils/QuadTree (3.5.0):
+    - GoogleMaps
+  - GoogleMaps (4.0.0):
+    - GoogleMaps/Maps (= 4.0.0)
+  - GoogleMaps/Base (4.0.0)
+  - GoogleMaps/Maps (4.0.0):
+    - GoogleMaps/Base
+  - ImagePalette (0.1.0):
+    - SwiftPriorityQueue (~> 1.1.2)
+  - OCMock (3.8.1)
+  - ReactiveKit (3.17.4)
+  - SnapKit (5.0.1)
+  - SwiftPriorityQueue (1.1.2)
+  - SwiftProtobuf (1.15.0)
+  - SwiftSoup (2.3.2)
+  - Swinject (2.7.1)
+  - SwinjectAutoregistration (2.7.0):
+    - Swinject (~> 2.7)
+  - youtube-ios-player-helper (0.1.6)
+  - ZIPFoundation (0.9.11)
+
+DEPENDENCIES:
+  - Alamofire (= 4.9.1)
+  - AppCenter (2.5.3)
+  - Bond (= 7.8.1)
+  - Differ (= 1.4.5)
+  - FloatingPanel (from `https://github.com/scenee/FloatingPanel.git`, commit `a9e46f0de6fd4da97ee76c79959529fefd8b924a`)
+  - Google-Maps-iOS-Utils (~> 3.5.0)
+  - ImagePalette (from `https://github.com/niorko/ImagePalette.git`, branch `carthage-0.2.0`)
+  - OCMock (~> 3.8.1)
+  - ReactiveKit (= 3.17.4)
+  - SnapKit (= 5.0.1)
+  - SwiftProtobuf (=1.15.0)
+  - SwiftSoup (= 2.3.2)
+  - Swinject (2.7.1)
+  - SwinjectAutoregistration (~> 2.7)
+  - youtube-ios-player-helper (from `https://github.com/youtube/youtube-ios-player-helper.git`, commit `5882789964ab7876c6a91dc905669535c0a90f92`)
+  - ZIPFoundation (~> 0.9.11)
+
+SPEC REPOS:
+  trunk:
+    - Alamofire
+    - AppCenter
+    - Bond
+    - Differ
+    - Google-Maps-iOS-Utils
+    - GoogleMaps
+    - OCMock
+    - ReactiveKit
+    - SnapKit
+    - SwiftPriorityQueue
+    - SwiftProtobuf
+    - SwiftSoup
+    - Swinject
+    - SwinjectAutoregistration
+    - ZIPFoundation
+
+EXTERNAL SOURCES:
+  FloatingPanel:
+    :commit: a9e46f0de6fd4da97ee76c79959529fefd8b924a
+    :git: https://github.com/scenee/FloatingPanel.git
+  ImagePalette:
+    :branch: carthage-0.2.0
+    :git: https://github.com/niorko/ImagePalette.git
+  youtube-ios-player-helper:
+    :commit: 5882789964ab7876c6a91dc905669535c0a90f92
+    :git: https://github.com/youtube/youtube-ios-player-helper.git
+
+CHECKOUT OPTIONS:
+  FloatingPanel:
+    :commit: a9e46f0de6fd4da97ee76c79959529fefd8b924a
+    :git: https://github.com/scenee/FloatingPanel.git
+  ImagePalette:
+    :commit: 7c522dc5467b5b9175c27a2e2c94c0e0b03f6f48
+    :git: https://github.com/niorko/ImagePalette.git
+  youtube-ios-player-helper:
+    :commit: 5882789964ab7876c6a91dc905669535c0a90f92
+    :git: https://github.com/youtube/youtube-ios-player-helper.git
+
+SPEC CHECKSUMS:
+  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
+  AppCenter: 51351e0121e40ba75e28ecb7de5c2e69d480df5e
+  Bond: 87075c7f20f37ea3e73dc7057fce839787bf46eb
+  Differ: 3b6bd78e2b20cc795d9a86f7641d087524e4273e
+  FloatingPanel: 73cf9d14b9b447827a83622e55f00e099891d7a3
+  Google-Maps-iOS-Utils: 9a3bfc50dab84dda55ab7fd1c3af39120798ea57
+  GoogleMaps: b7f7fc569a9b354a3af0d9729dbec40957b7d41e
+  ImagePalette: abe21425364d884ac8c33e6a425d930c24952b51
+  OCMock: 75fbeaa46a9b11f8c182bbb1d1f7e9a35ccc9955
+  ReactiveKit: f9f9e079efa39312c597bf1508ef4810d111ce76
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
+  SwiftPriorityQueue: bafec150153c600a6b9f97b42abe25538745fadb
+  SwiftProtobuf: fd4693388a96c8c2df35d3b063272b0e7c499d00
+  SwiftSoup: 230991361c5ba249d140161860a3864a28b63860
+  Swinject: ddf78b8486dd9b71a667b852cad919ab4484478e
+  SwinjectAutoregistration: 330f5012642a8b5c89a8a4adb0c5e52df07382c0
+  youtube-ios-player-helper: 360b2f7b9d9b5fbab912ab06174cd21a10bdb9c4
+  ZIPFoundation: b1f0de4eed33e74a676f76e12559ab6b75990197
+
+PODFILE CHECKSUM: a4b4db440a20eff508be712c8e9f869b0ad4d0cd
+
+COCOAPODS: 1.10.0
