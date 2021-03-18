@@ -1,0 +1,270 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "foreground": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/foreground",
+      "sourceRoot": "projects/foreground/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/foreground",
+            "index": "projects/foreground/src/index.html",
+            "main": "projects/foreground/src/main.ts",
+            "polyfills": "projects/foreground/src/polyfills.ts",
+            "tsConfig": "projects/foreground/tsconfig.app.json",
+            "aot": true,
+            "assets": [
+              "projects/foreground/src/favicon.ico",
+              "projects/foreground/src/assets",
+              {
+                "glob": "**/*",
+                "input": "node_modules/@shift/ui/assets/shift/ui/skoda/cSkin/",
+                "output": "/assets/shift/ui/skoda/cSkin/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/@shift/ui/assets/shift/ui/skoda/dSkin/",
+                "output": "/assets/shift/ui/skoda/dSkin/"
+              },
+              {
+                "input": "projects\\translation\\json",
+                "glob": "**/*.json",
+                "output": "/shared-assets/i18n/"
+              }
+            ],
+            "styles": [
+              "projects/foreground/src/styles.scss"
+            ],
+            "scripts": [],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/@shift/ui/lib/theming"
+              ]
+            },
+            "fileReplacements": [
+              {
+                "replace": "projects\\foreground\\src\\languages.json",
+                "with": "projects\\translation\\languages.json"
+              }
+            ]
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/foreground/src/environments/environment.ts",
+                  "with": "projects/foreground/src/environments/environment.prod.ts"
+                },
+                {
+                  "replace": "projects\\foreground\\src\\languages.json",
+                  "with": "projects\\translation\\languages.json"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "foreground:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "foreground:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "foreground:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/foreground/src/test.ts",
+            "polyfills": "projects/foreground/src/polyfills.ts",
+            "tsConfig": "projects/foreground/tsconfig.spec.json",
+            "karmaConfig": "projects/foreground/karma.conf.js",
+            "assets": [
+              "projects/foreground/src/favicon.ico",
+              "projects/foreground/src/assets"
+            ],
+            "styles": [
+              "projects/foreground/src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/foreground/tsconfig.app.json",
+              "projects/foreground/tsconfig.spec.json",
+              "projects/foreground/e2e/tsconfig.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "projects/foreground/e2e/protractor.conf.js",
+            "devServerTarget": "foreground:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "foreground:serve:production"
+            }
+          }
+        }
+      }
+    },
+    "translation": {
+      "projectType": "application",
+      "root": "projects\\translation",
+      "prefix": "",
+      "architect": {
+        "translate": {
+          "builder": "@shift/builder.translate:translate",
+          "options": {
+            "txtIDFile": "projects\\translation\\text-ids.json",
+            "keepTranslationsOnExport": false,
+            "keepTranslationsOnImport": false,
+            "ignoreEmptyTexts": true,
+            "replaceOnImport": {
+              "\\n": " "
+            },
+            "jsonFolder": "projects\\translation\\json",
+            "languages": "projects\\translation\\languages.json",
+            "hmiLinguistProjectFilename": "text-ids.xml",
+            "hmiLinguistProjectID": 123,
+            "hmiLinguistProjectName": "translation",
+            "hmiLinguistProjectFolder": "projects\\translation\\hmilinguist",
+            "hmiLinguistDefaultStyle": {
+              "standard": {
+                "fontType": "VWTextCarUI-Light.ttf",
+                "lineBreakMode": "Word",
+                "fontSize": 30,
+                "isBold": false,
+                "isItalic": false,
+                "isBitmap": false,
+                "maxLines": 1,
+                "maxWidth": 800,
+                "maxLength": -1
+              }
+            }
+          }
+        },
+        "translate-import": {
+          "builder": "@shift/builder.translate:translate",
+          "options": {
+            "translateTarget": "translation:translate",
+            "action": "import"
+          }
+        },
+        "translate-export": {
+          "builder": "@shift/builder.translate:translate",
+          "options": {
+            "translateTarget": "translation:translate",
+            "action": "export"
+          }
+        },
+        "translate-generate-map": {
+          "builder": "@shift/builder.translate:translate",
+          "options": {
+            "translateTarget": "translation:translate",
+            "action": "generate-map"
+          }
+        }
+      }
+    },
+    "webapp": {
+      "projectType": "application",
+      "root": "projects/webapp",
+      "architect": {
+        "build": {
+          "builder": "@shift/builder.webapps:build",
+          "options": {
+            "outputPath": "dist/webapp",
+            "manifest": "projects/webapp/manifest.json",
+            "assets": [
+              {
+                "input": "projects/webapp/shared-assets",
+                "glob": "**/*",
+                "output": "/shared-assets/"
+              },
+              {
+                "input": "projects/webapp",
+                "glob": "*.mose",
+                "output": "/sSOA-Manifest/"
+              }
+            ],
+            "platform": "mod3",
+            "outputUnpackedPath": "dist/webapp/unpacked",
+            "outputJarPath": "dist/webapp/carapp_inform_caroo.jar",
+            "appDirectory": "apps",
+            "translationsPath": "projects\\translation\\json\\standard"
+          },
+          "configurations": {
+            "production": {
+              "endpointTargetConfiguration": "production"
+            }
+          }
+        },
+        "serve": {
+          "builder": "@shift/builder.webapps:serve",
+          "options": {
+            "buildTarget": "webapp:build",
+            "serveDirectory": "dist/webapp-serve",
+            "port": 4200
+          }
+        },
+        "license": {
+          "builder": "@shift/builder.webapps:license",
+          "options": {
+            "buildTarget": "webapp:build",
+            "licenseFolder": "projects/webapp/shared-assets/licenses",
+            "excelPath": "projects/webapp/license-reports"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "foreground"
+}
+
