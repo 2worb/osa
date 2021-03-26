@@ -3,13 +3,64 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
+    "background": {
+      "projectType": "application",
+      "root": "projects/background",
+      "sourceRoot": "projects/background/src",
+      "architect": {
+        "build": {
+          "builder": "@shift/builder.node:build",
+          "options": {
+            "webpackExternals": ["sqlite3"],
+            "outputPath": "dist/background",
+            "main": "projects/background/src/main.ts",
+            "tsConfig": "projects/background/tsconfig.json",
+            "sourceMaps": true
+        },
+          "configurations": {
+            "production": {
+              "sourceMaps": false,
+              "fileReplacements": [
+                {
+                  "replace": "projects/background/src/environments/environment.ts",
+                  "with": "projects/background/src/environments/environment.prod.ts"
+                }
+              ]
+            },
+            "simulation": {
+              "fileReplacements": [
+                {
+                  "replace": "projects/background/src/environments/environment.ts",
+                  "with": "projects/background/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@shift/builder.node:serve",
+          "options": {
+            "buildTarget": "background:build"
+          },
+          "configurations": {
+            "simulation": {
+              "buildTarget": "background:build:simulation"
+            }
+          }
+        },
+        "license": {
+          "builder": "@shift/builder.license:build",
+          "options": {
+            "licenseFolder": "projects/background/src/assets/licenses",
+            "excelPath": "projects/license-reports",
+            "saveLicenses": true
+          }
+        }
+      }
+    },
     "foreground": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
+      "schematics": {},
       "root": "projects/foreground",
       "sourceRoot": "projects/foreground/src",
       "prefix": "app",
@@ -27,34 +78,17 @@
               "projects/foreground/src/favicon.ico",
               "projects/foreground/src/assets",
               {
-                "glob": "**/*",
-                "input": "node_modules/@shift/ui/assets/shift/ui/skoda/cSkin/",
-                "output": "/assets/shift/ui/skoda/cSkin/"
-              },
-              {
-                "glob": "**/*",
-                "input": "node_modules/@shift/ui/assets/shift/ui/skoda/dSkin/",
-                "output": "/assets/shift/ui/skoda/dSkin/"
-              },
-              {
-                "input": "projects\\translation\\json",
+                "input": "projects/i18n/json",
                 "glob": "**/*.json",
                 "output": "/shared-assets/i18n/"
               }
             ],
-            "styles": [
-              "projects/foreground/src/styles.scss"
-            ],
+            "styles": ["projects/foreground/src/styles.css"],
             "scripts": [],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "node_modules/@shift/ui/lib/theming"
-              ]
-            },
             "fileReplacements": [
               {
-                "replace": "projects\\foreground\\src\\languages.json",
-                "with": "projects\\translation\\languages.json"
+                "replace": "projects/foreground/src/languages.json",
+                "with": "projects/i18n/languages.json"
               }
             ]
           },
@@ -66,8 +100,8 @@
                   "with": "projects/foreground/src/environments/environment.prod.ts"
                 },
                 {
-                  "replace": "projects\\foreground\\src\\languages.json",
-                  "with": "projects\\translation\\languages.json"
+                  "replace": "projects/foreground/src/languages.json",
+                  "with": "projects/i18n/languages.json"
                 }
               ],
               "optimization": true,
@@ -90,7 +124,8 @@
                   "maximumError": "10kb"
                 }
               ]
-            }
+            },
+            "simulation": {}
           }
         },
         "serve": {
@@ -99,8 +134,8 @@
             "browserTarget": "foreground:build"
           },
           "configurations": {
-            "production": {
-              "browserTarget": "foreground:build:production"
+            "simulation": {
+              "browserTarget": "foreground:build"
             }
           }
         },
@@ -121,9 +156,7 @@
               "projects/foreground/src/favicon.ico",
               "projects/foreground/src/assets"
             ],
-            "styles": [
-              "projects/foreground/src/styles.scss"
-            ],
+            "styles": ["projects/foreground/src/styles.css"],
             "scripts": []
           }
         },
@@ -135,9 +168,7 @@
               "projects/foreground/tsconfig.spec.json",
               "projects/foreground/e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -154,27 +185,27 @@
         }
       }
     },
-    "translation": {
+    "i18n": {
       "projectType": "application",
-      "root": "projects\\translation",
+      "root": "projects/i18n",
       "prefix": "",
       "architect": {
         "translate": {
           "builder": "@shift/builder.translate:translate",
           "options": {
-            "txtIDFile": "projects\\translation\\text-ids.json",
+            "txtIDFile": "projects/i18n/text-ids.json",
             "keepTranslationsOnExport": false,
             "keepTranslationsOnImport": false,
             "ignoreEmptyTexts": true,
             "replaceOnImport": {
               "\\n": " "
             },
-            "jsonFolder": "projects\\translation\\json",
-            "languages": "projects\\translation\\languages.json",
+            "jsonFolder": "projects/i18n/json",
+            "languages": "projects/i18n/languages.json",
             "hmiLinguistProjectFilename": "text-ids.xml",
             "hmiLinguistProjectID": 123,
-            "hmiLinguistProjectName": "translation",
-            "hmiLinguistProjectFolder": "projects\\translation\\hmilinguist",
+            "hmiLinguistProjectName": "i18n",
+            "hmiLinguistProjectFolder": "projects/i18n/hmilinguist",
             "hmiLinguistDefaultStyle": {
               "standard": {
                 "fontType": "VWTextCarUI-Light.ttf",
@@ -193,21 +224,21 @@
         "translate-import": {
           "builder": "@shift/builder.translate:translate",
           "options": {
-            "translateTarget": "translation:translate",
+            "translateTarget": "i18n:translate",
             "action": "import"
           }
         },
         "translate-export": {
           "builder": "@shift/builder.translate:translate",
           "options": {
-            "translateTarget": "translation:translate",
+            "translateTarget": "i18n:translate",
             "action": "export"
           }
         },
         "translate-generate-map": {
           "builder": "@shift/builder.translate:translate",
           "options": {
-            "translateTarget": "translation:translate",
+            "translateTarget": "i18n:translate",
             "action": "generate-map"
           }
         }
@@ -216,17 +247,18 @@
     "webapp": {
       "projectType": "application",
       "root": "projects/webapp",
+      "sourceRoot": "projects/webapp",
       "architect": {
         "build": {
           "builder": "@shift/builder.webapps:build",
           "options": {
-            "outputPath": "dist/webapp",
+            "outputPath": "output",
             "manifest": "projects/webapp/manifest.json",
             "assets": [
               {
                 "input": "projects/webapp/shared-assets",
-                "glob": "**/*",
-                "output": "/shared-assets/"
+                "output": "shared-assets",
+                "glob": "**/*"
               },
               {
                 "input": "projects/webapp",
@@ -234,15 +266,39 @@
                 "output": "/sSOA-Manifest/"
               }
             ],
-            "platform": "mod3",
-            "outputUnpackedPath": "dist/webapp/unpacked",
-            "outputJarPath": "dist/webapp/carapp_inform_caroo.jar",
+            "outputUnpackedPath": "output/webapp/unpacked",
+            "outputJarPath": "output/webapp/cardatabrok.jar",
             "appDirectory": "apps",
-            "translationsPath": "projects\\translation\\json\\standard"
+            "translationsPath": "projects/i18n/json/standard",
+            "createAppRepoPackage": true,
+            "createReleasePackage": true,
+            "backendidentifier": "mbbb",
+            "appname": "cardatabrok",
+            "brand": "skoda",
+            "targetsystem": "mib3",
+            "majorversion": 3,
+            "minorversion": 1,
+            "bugfixversion": 37,
+            "targetmarket": "eu_rdw",
+            "syncVersion": true
           },
           "configurations": {
+            "mod4": {
+              "endpointTargetConfiguration": "mod4",
+              "platform": "mod4"
+            },
+            "prod-mod4": {
+              "endpointTargetConfiguration": "prod-mod4",
+              "platform": "mod4",
+              "excludeFonts": true
+            },
+            "prod-mod3": {
+              "endpointTargetConfiguration": "prod-mod3",
+              "excludeFonts": true
+            },
             "production": {
-              "endpointTargetConfiguration": "production"
+              "endpointTargetConfiguration": "production",
+              "excludeFonts": true
             }
           }
         },
@@ -252,19 +308,30 @@
             "buildTarget": "webapp:build",
             "serveDirectory": "dist/webapp-serve",
             "port": 4200
+          },
+          "configurations": {
+            "mod4": {
+              "buildTarget": "webapp:build:mod4",
+              "endpointTargetConfiguration": "mod4"
+            },
+            "simulation": {
+              "buildTarget": "webapp:build",
+              "endpointTargetConfiguration": "simulation"
+            }
           }
         },
         "license": {
           "builder": "@shift/builder.webapps:license",
           "options": {
             "buildTarget": "webapp:build",
-            "licenseFolder": "projects/webapp/shared-assets/licenses",
-            "excelPath": "projects/webapp/license-reports"
+            "licenseFolder": "projects/webapp/shared-assets/",
+            "generateExcel": false,
+            "excelPath": "projects/webapp/shared-assets/report.xls",
+            "checkOnline": true
           }
         }
       }
     }
   },
-  "defaultProject": "foreground"
+  "defaultProject": "background"
 }
-
