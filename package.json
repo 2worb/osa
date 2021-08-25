@@ -3,8 +3,18 @@
   "version": "1.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve test",
+    "test": "ng test",
+    "lint": "ng lint",
+    "sng": "sng",
+    "e2e": "ng e2e",
+    "build": "sng build webapps",
+    "serve": "sng serve",
+    "simulate": "sng serve webapps --simulate --config=simulate",
+    "deploy": "npm run build && sh deploy.sh",
+    "translations": "sng translate.export",
+    "import-translations": "sng translate.import"
   },
+  "private": true,
   "dependencies": {
     "@angular/animations": "~9.1.12",
     "@angular/common": "~9.1.12",
