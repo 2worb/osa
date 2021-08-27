@@ -2,7 +2,7 @@
   "name": "test",
   "version": "1.1",
   "scripts": {
-    "simulate": "ng serve webapp",
+    "simulate": "ng serve webapp"
   },
   "private": true,
   "dependencies": {
